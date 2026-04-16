@@ -3,7 +3,11 @@ import { Layout } from "./components/layout";
 import { HomePage } from "./routes/home";
 import { AboutPage } from "./routes/about";
 import { SermonsPage } from "./routes/sermons";
+import { SermonDetailPage } from "./routes/sermon-detail";
 import { EventsPage } from "./routes/events";
+import { EventDetailPage } from "./routes/event-detail";
+import { BlogPage } from "./routes/blog";
+import { BlogDetailPage } from "./routes/blog-detail";
 import { GivePage } from "./routes/give";
 import { ContactPage } from "./routes/contact";
 import { EgroupsPage } from "./routes/ministries/egroups";
@@ -20,7 +24,11 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/sermons" element={<SermonsPage />} />
+          <Route path="/sermon/:id" element={<SermonDetailPage />} />
           <Route path="/events" element={<EventsPage />} />
+          <Route path="/event/:id" element={<EventDetailPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogDetailPage />} />
           <Route path="/give" element={<GivePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/ministries/egroups" element={<EgroupsPage />} />

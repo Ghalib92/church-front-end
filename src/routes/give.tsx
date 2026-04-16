@@ -33,16 +33,22 @@ const GIVING_OPTIONS = [
 export function GivePage() {
   return (
     <>
-      {/* Header */}
-      <section className="bg-gradient-to-b from-primary-50 to-white py-20 lg:py-28">
-        <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary-600">
+      {/* Hero with image */}
+      <section className="relative overflow-hidden">
+        <img
+          src="/giving-header.avif"
+          alt="Generosity and giving"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-primary-900/60" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center lg:py-28 lg:px-8">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary-200">
             Generosity
           </p>
-          <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
+          <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
             Give
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-500">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-primary-50">
             Your generosity fuels our mission to share the love of Christ, serve
             our community, and build God's kingdom. Every gift makes a
             difference.

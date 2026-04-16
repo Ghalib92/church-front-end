@@ -77,6 +77,19 @@ export function AboutPage() {
         </div>
       </section>
 
+      {/* Community image */}
+      <section className="py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="overflow-hidden rounded-2xl">
+            <img
+              src="/about_page_popup.avif"
+              alt="Grace Church community gathering"
+              className="h-[500px] w-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Values */}
       <section className="bg-gray-50 py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
