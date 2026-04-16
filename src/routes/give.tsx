@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { DonationModal } from "../components/donation-modal";
 
 const GIVING_OPTIONS = [
   {
@@ -31,8 +33,11 @@ const GIVING_OPTIONS = [
 ] as const;
 
 export function GivePage() {
+  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
+
   return (
     <>
+      <DonationModal isOpen={isDonationModalOpen} onClose={() => setIsDonationModalOpen(false)} />
       {/* Hero with image */}
       <section className="relative overflow-hidden">
         <img
@@ -53,6 +58,14 @@ export function GivePage() {
             our community, and build God's kingdom. Every gift makes a
             difference.
           </p>
+          <div className="mt-8 flex gap-4 justify-center">
+            <button
+              onClick={() => setIsDonationModalOpen(true)}
+              className="rounded-full bg-white px-8 py-3 text-sm font-bold text-primary-600 shadow-lg transition-all hover:bg-primary-50 hover:scale-105"
+            >
+              Give Now
+            </button>
+          </div>
         </div>
       </section>
 
@@ -141,7 +154,7 @@ export function GivePage() {
       {/* CTA */}
       <section className="py-16">
         <div className="mx-auto max-w-3xl px-6 text-center lg:px-8">
-          <p className="text-gray-500">
+          <p className="text-gray-500 mb-6">
             Have questions about giving?{" "}
             <Link
               to="/contact"
@@ -151,6 +164,12 @@ export function GivePage() {
             </Link>{" "}
             — we're happy to help.
           </p>
+          <button
+            onClick={() => setIsDonationModalOpen(true)}
+            className="rounded-full bg-primary-600 px-8 py-3 text-sm font-bold text-white shadow-lg transition-all hover:bg-primary-700 hover:scale-105"
+          >
+            Give a Donation
+          </button>
         </div>
       </section>
     </>

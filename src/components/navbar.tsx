@@ -7,7 +7,6 @@ const NAV_LINKS = [
   { to: "/sermons", label: "Sermons" },
   { to: "/events", label: "Events" },
   { to: "/blog", label: "Blog" },
-  { to: "/resources", label: "Resources" },
   { to: "/give", label: "Give" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -18,6 +17,12 @@ const GROUP_LINKS = [
   { to: "/ministries/children", label: "Children", desc: "Nursery through 5th grade" },
   { to: "/ministries/youth", label: "Youth", desc: "Students grades 6–12" },
   { to: "/ministries/young-adults", label: "Young Adults", desc: "Ages 18–30" },
+] as const;
+
+const RESOURCES_LINKS = [
+  { to: "/resources", label: "Church Resources", desc: "Sunday guides and tools" },
+  { to: "/library", label: "Library", desc: "Spiritual books for growth" },
+  { to: "/shop", label: "Shop", desc: "Merchandise and gifts" },
 ] as const;
 
 function TopBar() {
@@ -133,9 +138,68 @@ function GroupsDropdown() {
   );
 }
 
+function ResourcesDropdown() {
+  return (
+    <div className="group relative">
+      {/* Trigger */}
+      <button
+        type="button"
+        className="flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
+      >
+        Resources
+        <svg className="h-4 w-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+      </button>
+
+      {/* Dropdown — visible on hover */}
+      <div className="invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl">
+          {/* Header */}
+          <div className="border-b border-gray-100 bg-gray-50 px-5 py-3">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+              Explore
+            </p>
+          </div>
+
+          {/* Links */}
+          <div className="p-2">
+            {RESOURCES_LINKS.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="flex flex-col rounded-lg px-4 py-3 no-underline transition-colors hover:bg-primary-50"
+              >
+                <span className="text-sm font-semibold text-gray-900">
+                  {link.label}
+                </span>
+                <span className="text-xs text-gray-400">{link.desc}</span>
+              </Link>
+            ))}
+          </div>
+
+          {/* Footer */}
+          <div className="border-t border-gray-100 bg-gray-50 px-5 py-3">
+            <Link
+              to="/resources"
+              className="flex items-center gap-1.5 text-xs font-semibold text-primary-600 no-underline transition-colors hover:text-primary-700"
+            >
+              Browse all resources
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [groupsOpen, setGroupsOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50">
@@ -172,6 +236,7 @@ export function Navbar() {
               </NavLink>
             ))}
             <GroupsDropdown />
+            <ResourcesDropdown />
           </div>
 
           {/* CTA button desktop */}
@@ -242,6 +307,36 @@ export function Navbar() {
                       key={link.to}
                       to={link.to}
                       onClick={() => { setOpen(false); setGroupsOpen(false); }}
+                      className="rounded-lg px-3 py-2.5 no-underline transition-colors hover:bg-primary-50"
+                    >
+                      <span className="block text-sm font-medium text-gray-700">{link.label}</span>
+                      <span className="block text-xs text-gray-400">{link.desc}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {/* Resources accordion for mobile */}
+              <button
+                type="button"
+                onClick={() => setResourcesOpen(!resourcesOpen)}
+                className="flex items-center justify-between rounded-lg px-4 py-3 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 text-left cursor-pointer"
+              >
+                Resources
+                <svg
+                  className={`h-4 w-4 transition-transform ${resourcesOpen ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              {resourcesOpen && (
+                <div className="ml-4 flex flex-col gap-1 border-l-2 border-primary-100 pl-3">
+                  {RESOURCES_LINKS.map((link) => (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      onClick={() => { setOpen(false); setResourcesOpen(false); }}
                       className="rounded-lg px-3 py-2.5 no-underline transition-colors hover:bg-primary-50"
                     >
                       <span className="block text-sm font-medium text-gray-700">{link.label}</span>
