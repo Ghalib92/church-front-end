@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { to: "/sermons", label: "Sermons" },
   { to: "/events", label: "Events" },
   { to: "/blog", label: "Blog" },
+  { to: "/resources", label: "Resources" },
   { to: "/give", label: "Give" },
   { to: "/contact", label: "Contact" },
 ] as const;

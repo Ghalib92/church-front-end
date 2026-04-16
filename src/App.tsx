@@ -15,6 +15,12 @@ import { OutreachPage } from "./routes/ministries/outreach";
 import { ChildrenPage } from "./routes/ministries/children";
 import { YouthPage } from "./routes/ministries/youth";
 import { YoungAdultsPage } from "./routes/ministries/young-adults";
+import { ResourcesPage } from "./routes/resources";
+import { ResourceDetailPage } from "./routes/resource-detail";
+import { LibraryPage } from "./routes/library";
+import { LibraryDetailPage } from "./routes/library-detail";
+import { ShopPage } from "./routes/shop";
+import { ShopItemDetailPage } from "./routes/shop-item-detail";
 
 function App() {
   return (
@@ -29,6 +35,12 @@ function App() {
           <Route path="/event/:id" element={<EventDetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:id" element={<BlogDetailPage />} />
+          <Route path="/resources" element={<ResourcesPage />} />
+          <Route path="/resource/:id" element={<ResourceDetailPage />} />
+          <Route path="/library" element={<LibraryPage />} />
+          <Route path="/library/:id" element={<LibraryDetailPage />} />
+          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:id" element={<ShopItemDetailPage />} />
           <Route path="/give" element={<GivePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/ministries/egroups" element={<EgroupsPage />} />
