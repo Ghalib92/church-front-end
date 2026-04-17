@@ -16,6 +16,8 @@ import { OutreachPage } from "./routes/ministries/outreach";
 import { ChildrenPage } from "./routes/ministries/children";
 import { YouthPage } from "./routes/ministries/youth";
 import { YoungAdultsPage } from "./routes/ministries/young-adults";
+import { MensGroupPage } from "./routes/ministries/mens-group";
+import { WomensCirclePage } from "./routes/ministries/womens-circle";
 import { ResourcesPage } from "./routes/resources";
 import { ResourceDetailPage } from "./routes/resource-detail";
 import { LibraryPage } from "./routes/library";
@@ -50,6 +52,8 @@ function App() {
           <Route path="/ministries/children" element={<ChildrenPage />} />
           <Route path="/ministries/youth" element={<YouthPage />} />
           <Route path="/ministries/young-adults" element={<YoungAdultsPage />} />
+          <Route path="/ministries/mens-group" element={<MensGroupPage />} />
+          <Route path="/ministries/womens-circle" element={<WomensCirclePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
