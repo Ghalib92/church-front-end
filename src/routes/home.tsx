@@ -260,6 +260,52 @@ export function HomePage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <Reveal direction="left" delay={150} className="order-2 lg:order-1">
+              <p className="text-sm font-semibold uppercase tracking-widest text-teal-600">
+                For Families
+              </p>
+              <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                Grace Kids Daycare
+              </h2>
+              <p className="mt-4 text-gray-500 leading-relaxed">
+                Looking for quality, educational childcare in a faith-filled environment? Our Grace Kids Daycare program offers flexible scheduling, trained staff, and engaging activities designed to help your child learn, grow, and thrive.
+              </p>
+              <ul className="mt-4 space-y-2 text-gray-600 text-sm">
+                <li className="flex items-center gap-2">
+                  <span className="text-teal-600 font-bold">✓</span> Educationally designed activities
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-teal-600 font-bold">✓</span> Flexible hourly, half-day, and full-day plans
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-teal-600 font-bold">✓</span> Affordable, faith-based care
+                </li>
+              </ul>
+              <Link
+                to="/ministries/children"
+                className="group mt-6 inline-flex items-center gap-2 text-sm font-bold text-teal-600 transition-colors hover:text-teal-700 no-underline"
+              >
+                Learn more about daycare
+                <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </Reveal>
+            <Reveal direction="right" className="order-1 hover-zoom-image overflow-hidden rounded-2xl shadow-lg lg:order-2">
+              <img
+                src="/about_page_watch_party.avif"
+                alt="Kids daycare"
+                className="h-[400px] w-full object-cover"
+              />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Two-column image + text — reversed */}
+      <section className="py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <Reveal direction="left" delay={150} className="order-2 lg:order-1">
               <p className="text-sm font-semibold uppercase tracking-widest text-primary-600">
                 Careers & Volunteering
               </p>
