@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const NAV_LINKS = [
@@ -95,7 +95,7 @@ function GroupsDropdown() {
       </button>
 
       {/* Dropdown — visible on hover */}
-      <div className="invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+      <div className="invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 translate-y-1 pt-2 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
         <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl">
           {/* Header */}
           <div className="border-b border-gray-100 bg-gray-50 px-5 py-3">
@@ -110,9 +110,9 @@ function GroupsDropdown() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="flex flex-col rounded-lg px-4 py-3 no-underline transition-colors hover:bg-primary-50"
+                className="group/item flex flex-col rounded-lg px-4 py-3 no-underline transition-all duration-200 hover:translate-x-1 hover:bg-primary-50"
               >
-                <span className="text-sm font-semibold text-gray-900">
+                <span className="text-sm font-semibold text-gray-900 transition-colors group-hover/item:text-primary-700">
                   {link.label}
                 </span>
                 <span className="text-xs text-gray-400">{link.desc}</span>
@@ -153,7 +153,7 @@ function ResourcesDropdown() {
       </button>
 
       {/* Dropdown — visible on hover */}
-      <div className="invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+      <div className="invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 translate-y-1 pt-2 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
         <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl">
           {/* Header */}
           <div className="border-b border-gray-100 bg-gray-50 px-5 py-3">
@@ -168,9 +168,9 @@ function ResourcesDropdown() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="flex flex-col rounded-lg px-4 py-3 no-underline transition-colors hover:bg-primary-50"
+                className="group/item flex flex-col rounded-lg px-4 py-3 no-underline transition-all duration-200 hover:translate-x-1 hover:bg-primary-50"
               >
-                <span className="text-sm font-semibold text-gray-900">
+                <span className="text-sm font-semibold text-gray-900 transition-colors group-hover/item:text-primary-700">
                   {link.label}
                 </span>
                 <span className="text-xs text-gray-400">{link.desc}</span>
@@ -200,16 +200,41 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [groupsOpen, setGroupsOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50">
       <TopBar />
 
-      <nav className="bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+      <nav
+        className={`border-b transition-all duration-300 ${
+          scrolled
+            ? "bg-white/90 backdrop-blur-md border-gray-200 shadow-md"
+            : "bg-white/95 backdrop-blur-sm border-gray-100 shadow-sm"
+        }`}
+      >
+        <div
+          className={`mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8 transition-[padding] duration-300 ${
+            scrolled ? "py-2.5" : "py-4"
+          }`}
+        >
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 no-underline">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-600 text-white font-bold text-lg">
+          <Link
+            to="/"
+            className="group flex items-center gap-2 no-underline transition-transform duration-300 hover:scale-[1.03]"
+          >
+            <div
+              className={`flex items-center justify-center rounded-full bg-primary-600 text-white font-bold shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:bg-primary-700 ${
+                scrolled ? "h-9 w-9 text-base" : "h-10 w-10 text-lg"
+              }`}
+            >
               C
             </div>
             <span className="text-xl font-bold text-gray-900 tracking-tight">
@@ -242,7 +267,7 @@ export function Navbar() {
           {/* CTA button desktop */}
           <Link
             to="/give"
-            className="hidden lg:inline-flex items-center rounded-full bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-primary-700 hover:shadow-md no-underline"
+            className="btn-shine hidden lg:inline-flex items-center rounded-full bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-700 hover:shadow-lg no-underline"
           >
             Give Online
           </Link>
@@ -266,7 +291,7 @@ export function Navbar() {
 
         {/* Mobile nav */}
         {open && (
-          <div className="lg:hidden border-t border-gray-100 bg-white px-6 pb-6 pt-2">
+          <div className="lg:hidden border-t border-gray-100 bg-white px-6 pb-6 pt-2 animate-fade-in-down">
             <div className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
                 <NavLink

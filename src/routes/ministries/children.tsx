@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { EventRegistrationModal } from "../../components/event-registration-modal";
 
 const FEATURES = [
   { title: "Sunday School", desc: "Age-appropriate Bible lessons with crafts, games, and worship every Sunday during both services." },
@@ -8,6 +10,8 @@ const FEATURES = [
 ] as const;
 
 export function ChildrenPage() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       {/* Hero */}
@@ -92,14 +96,20 @@ export function ChildrenPage() {
           <p className="mt-3 text-teal-100/80">
             Bring them this Sunday — first-time families get a special welcome!
           </p>
-          <Link
-            to="/contact"
-            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-teal-700 shadow-lg transition-all hover:bg-teal-50 no-underline"
+          <button
+            onClick={() => setModalOpen(true)}
+            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-teal-700 shadow-lg transition-all hover:bg-teal-50 no-underline cursor-pointer"
           >
             Plan Your Visit
-          </Link>
+          </button>
         </div>
       </section>
+
+      <EventRegistrationModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        eventTitle="Children's Ministry"
+      />
     </>
   );
 }

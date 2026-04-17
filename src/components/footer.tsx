@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Reveal } from "./reveal";
 
 const QUICK_LINKS = [
   { to: "/about", label: "About Us" },
@@ -14,12 +15,12 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-500 text-white font-bold text-lg">
+          <Reveal direction="up">
+            <div className="group flex items-center gap-2 mb-4 w-fit">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-500 text-white font-bold text-lg shadow-md transition-all duration-300 group-hover:scale-110 group-hover:shadow-primary-500/50 group-hover:shadow-lg">
                 C
               </div>
-              <span className="text-xl font-bold text-white tracking-tight">
+              <span className="text-xl font-bold text-white tracking-tight transition-colors group-hover:text-primary-300">
                 Grace Church
               </span>
             </div>
@@ -27,10 +28,10 @@ export function Footer() {
               A welcoming community rooted in faith, love, and service. Join us
               every Sunday as we worship together and grow in Christ.
             </p>
-          </div>
+          </Reveal>
 
           {/* Quick links */}
-          <div>
+          <Reveal direction="up" delay={150}>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
               Quick Links
             </h3>
@@ -39,17 +40,18 @@ export function Footer() {
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="text-sm text-gray-400 transition-colors hover:text-white no-underline"
+                    className="group inline-flex items-center gap-1.5 text-sm text-gray-400 transition-all duration-300 hover:translate-x-1 hover:text-white no-underline"
                   >
+                    <span className="h-px w-0 bg-primary-400 transition-all duration-300 group-hover:w-4" />
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
           {/* Contact info */}
-          <div>
+          <Reveal direction="up" delay={300}>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
               Visit Us
             </h3>
@@ -74,15 +76,15 @@ export function Footer() {
                 <p>Wednesday: 7:00 PM</p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 border-t border-gray-800 pt-8 text-center">
+        <Reveal direction="up" delay={200} className="mt-12 border-t border-gray-800 pt-8 text-center">
           <p className="text-xs text-gray-500">
             &copy; {new Date().getFullYear()} Grace Church. All rights reserved.
           </p>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );

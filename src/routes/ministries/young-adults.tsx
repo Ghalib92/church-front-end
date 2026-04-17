@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { EventRegistrationModal } from "../../components/event-registration-modal";
 
 const OFFERINGS = [
   { title: "Sunday Gathering", desc: "Join us after the 11 AM service for lunch, conversation, and a space designed for young adults." },
@@ -8,6 +10,8 @@ const OFFERINGS = [
 ] as const;
 
 export function YoungAdultsPage() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       {/* Hero */}
@@ -51,12 +55,12 @@ export function YoungAdultsPage() {
                 Whether you're new to faith or grew up in church, you'll find
                 authentic community here.
               </p>
-              <Link
-                to="/contact"
-                className="mt-6 inline-flex rounded-full bg-orange-500 px-7 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-orange-600 no-underline"
+              <button
+                onClick={() => setModalOpen(true)}
+                className="mt-6 inline-flex rounded-full bg-orange-500 px-7 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-orange-600 no-underline cursor-pointer"
               >
                 Get Connected
-              </Link>
+              </button>
             </div>
             <div className="overflow-hidden rounded-2xl">
               <img
@@ -107,14 +111,20 @@ export function YoungAdultsPage() {
           <p className="mt-3 text-orange-100/80">
             Show up this Thursday at 7 PM. We'll save you a seat.
           </p>
-          <Link
-            to="/contact"
-            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-orange-600 shadow-lg transition-all hover:bg-orange-50 no-underline"
+          <button
+            onClick={() => setModalOpen(true)}
+            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-orange-600 shadow-lg transition-all hover:bg-orange-50 no-underline cursor-pointer"
           >
             Join Us
-          </Link>
+          </button>
         </div>
       </section>
+
+      <EventRegistrationModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        eventTitle="Young Adults Ministry"
+      />
     </>
   );
 }

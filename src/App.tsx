@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./components/layout";
+import { ScrollToTop } from "./components/scroll-to-top";
 import { HomePage } from "./routes/home";
 import { AboutPage } from "./routes/about";
 import { SermonsPage } from "./routes/sermons";
@@ -25,6 +26,7 @@ import { ShopItemDetailPage } from "./routes/shop-item-detail";
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />

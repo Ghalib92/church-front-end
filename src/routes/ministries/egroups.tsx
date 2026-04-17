@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { EventRegistrationModal } from "../../components/event-registration-modal";
 
 const GROUPS = [
   { name: "Men's Group", day: "Tuesday", time: "7:00 PM", desc: "Fellowship, accountability, and growth for men of all ages." },
@@ -10,6 +12,8 @@ const GROUPS = [
 ] as const;
 
 export function EgroupsPage() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       {/* Hero */}
@@ -53,12 +57,12 @@ export function EgroupsPage() {
                 Whether you're a new believer or have followed Jesus for
                 decades, there's a group where you'll fit right in.
               </p>
-              <Link
-                to="/contact"
-                className="mt-6 inline-flex rounded-full bg-blue-700 px-7 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-blue-800 no-underline"
+              <button
+                onClick={() => setModalOpen(true)}
+                className="mt-6 inline-flex rounded-full bg-blue-700 px-7 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-blue-800 no-underline cursor-pointer"
               >
                 Find Your Group
-              </Link>
+              </button>
             </div>
             <div className="overflow-hidden rounded-2xl">
               <img
@@ -105,14 +109,20 @@ export function EgroupsPage() {
           <p className="mt-3 text-blue-100/80">
             Sign up today and we'll match you with a group that fits your life.
           </p>
-          <Link
-            to="/contact"
-            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-blue-700 shadow-lg transition-all hover:bg-blue-50 no-underline"
+          <button
+            onClick={() => setModalOpen(true)}
+            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-blue-700 shadow-lg transition-all hover:bg-blue-50 no-underline cursor-pointer"
           >
             Join an eGroup
-          </Link>
+          </button>
         </div>
       </section>
+
+      <EventRegistrationModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        eventTitle="eGroup Registration"
+      />
     </>
   );
 }

@@ -1,5 +1,8 @@
 import { useParams, Link } from "react-router-dom";
+import { useState } from "react";
 import { cleanTextForDisplay } from "../lib/text-utils";
+import { EventRegistrationModal } from "../components/event-registration-modal";
+import { ShareEventModal } from "../components/share-event-modal";
 
 const EVENTS = [
   {
@@ -250,6 +253,8 @@ export function EventDetailPage() {
   const { id } = useParams<{ id: string }>();
   const eventId = id ? parseInt(id, 10) : null;
   const event = EVENTS.find((e) => e.id === eventId);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   if (!event) {
     return (
@@ -359,10 +364,16 @@ export function EventDetailPage() {
           {/* CTA */}
           <div className="border-t border-gray-200 pt-8 mt-8">
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="flex-1 rounded-full bg-primary-600 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-primary-700 shadow-md hover:shadow-lg">
+              <button
+                onClick={() => setModalOpen(true)}
+                className="flex-1 rounded-full bg-primary-600 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-primary-700 shadow-md hover:shadow-lg cursor-pointer"
+              >
                 Register for Event
               </button>
-              <button className="flex-1 rounded-full border-2 border-primary-600 px-8 py-4 text-base font-semibold text-primary-600 transition-all hover:bg-primary-50">
+              <button
+                onClick={() => setShareOpen(true)}
+                className="flex-1 rounded-full border-2 border-primary-600 px-8 py-4 text-base font-semibold text-primary-600 transition-all hover:bg-primary-50 cursor-pointer"
+              >
                 Share Event
               </button>
             </div>
@@ -406,6 +417,21 @@ export function EventDetailPage() {
           </div>
         </div>
       </section>
+
+      <EventRegistrationModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        eventTitle={event.title}
+      />
+
+      <ShareEventModal
+        isOpen={shareOpen}
+        onClose={() => setShareOpen(false)}
+        eventTitle={event.title}
+        eventDate={event.date}
+        eventTime={event.time}
+        eventLocation={event.location}
+      />
     </>
   );
 }

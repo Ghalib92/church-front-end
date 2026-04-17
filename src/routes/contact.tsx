@@ -108,10 +108,10 @@ export function ContactPage() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">
-                  Message Sent!
+                  Message Received!
                 </h3>
                 <p className="mt-2 text-gray-500">
-                  Thank you for reaching out. We'll get back to you soon.
+                  Thanks, we have received your message. We'll get back to you soon.
                 </p>
                 <button
                   type="button"

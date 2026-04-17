@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { EventRegistrationModal } from "../../components/event-registration-modal";
 
 const PROGRAMS = [
   { title: "Community Food Pantry", desc: "Every Saturday we distribute fresh groceries to 100+ families in our neighborhood. Volunteers welcome." },
@@ -8,6 +10,8 @@ const PROGRAMS = [
 ] as const;
 
 export function OutreachPage() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       {/* Hero */}
@@ -86,14 +90,20 @@ export function OutreachPage() {
           <p className="mt-3 text-green-100/80">
             Join our next outreach event and make a lasting difference.
           </p>
-          <Link
-            to="/contact"
-            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-green-700 shadow-lg transition-all hover:bg-green-50 no-underline"
+          <button
+            onClick={() => setModalOpen(true)}
+            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-green-700 shadow-lg transition-all hover:bg-green-50 no-underline cursor-pointer"
           >
             Volunteer Today
-          </Link>
+          </button>
         </div>
       </section>
+
+      <EventRegistrationModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        eventTitle="Outreach Ministry"
+      />
     </>
   );
 }

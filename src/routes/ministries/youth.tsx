@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { EventRegistrationModal } from "../../components/event-registration-modal";
 
 const ACTIVITIES = [
   { title: "Wednesday Night Youth", desc: "Worship, games, and a message designed for students. Every Wednesday at 6:30 PM." },
@@ -10,6 +12,8 @@ const ACTIVITIES = [
 ] as const;
 
 export function YouthPage() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
       {/* Hero */}
@@ -94,14 +98,20 @@ export function YouthPage() {
             6:30 PM at the Youth Center. Come for the games, stay for the
             community.
           </p>
-          <Link
-            to="/contact"
-            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-gray-900 shadow-lg transition-all hover:bg-gray-100 no-underline"
+          <button
+            onClick={() => setModalOpen(true)}
+            className="mt-6 inline-flex rounded-full bg-white px-8 py-3 text-sm font-bold text-gray-900 shadow-lg transition-all hover:bg-gray-100 no-underline cursor-pointer"
           >
             Get Connected
-          </Link>
+          </button>
         </div>
       </section>
+
+      <EventRegistrationModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        eventTitle="Youth Ministry"
+      />
     </>
   );
 }
