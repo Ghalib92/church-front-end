@@ -230,13 +230,13 @@ export function Navbar() {
             to="/"
             className="group flex items-center gap-2 no-underline transition-transform duration-300 hover:scale-[1.03]"
           >
-            <div
-              className={`flex items-center justify-center rounded-full bg-primary-600 text-white font-bold shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:bg-primary-700 ${
-                scrolled ? "h-9 w-9 text-base" : "h-10 w-10 text-lg"
+            <img
+              src="/favicon.png"
+              alt="Grace Church Logo"
+              className={`transition-all duration-300 ${
+                scrolled ? "h-9 w-9" : "h-10 w-10"
               }`}
-            >
-              C
-            </div>
+            />
             <span className="text-xl font-bold text-gray-900 tracking-tight">
               Grace Church
             </span>
