@@ -27,16 +27,22 @@ const TEAM = [
 export function AboutPage() {
   return (
     <>
-      {/* Header */}
-      <section className="bg-gradient-to-b from-primary-50 to-white py-20 lg:py-28">
-        <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
-          <p className="text-sm font-semibold uppercase tracking-widest text-primary-600">
+      {/* Header with Image Background */}
+      <section className="relative overflow-hidden">
+        <img
+          src="/about_page_hero.avif"
+          alt="About Grace Church"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-32 text-center lg:px-8 lg:py-40">
+          <p className="text-sm font-semibold uppercase tracking-widest text-white/90">
             Who We Are
           </p>
-          <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
+          <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
             About Grace Church
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-500">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/90">
             Founded on the belief that everyone deserves to know the love of
             Christ, Grace Church has been a beacon of hope in our community for
             over 25 years.
