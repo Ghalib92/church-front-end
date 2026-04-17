@@ -15,6 +15,7 @@ const DAYCARE_PLANS = [
     price: "$10",
     period: "per hour",
     features: ["Flexible scheduling", "Perfect for occasional care", "Drop-in available"],
+    highlight: false,
   },
   {
     name: "3 Hours",

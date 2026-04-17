@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { EventRegistrationModal } from "../../components/event-registration-modal";
 
