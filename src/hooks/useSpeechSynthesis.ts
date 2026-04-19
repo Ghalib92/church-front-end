@@ -3,68 +3,90 @@ import { cleanTextForSpeech } from "../lib/text-utils";
 
 type SpeechState = "idle" | "playing" | "paused" | "finished";
 
+function getPreferredVoice(): SpeechSynthesisVoice | null {
+  const voices = speechSynthesis.getVoices();
+  return (
+    voices.find(
+      (v) => v.lang.startsWith("en") && v.name.toLowerCase().includes("female"),
+    ) ||
+    voices.find((v) => v.lang.startsWith("en")) ||
+    voices[0] ||
+    null
+  );
+}
+
 export function useSpeechSynthesis() {
   const [state, setState] = useState<SpeechState>("idle");
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-  const isDarkMode = useRef(false);
+  // Keeps Chrome from silently cutting off speech after ~15s (known browser bug)
+  const keepAliveRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Detect if user prefers dark mode for voice selection
   useEffect(() => {
-    isDarkMode.current = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
+    return () => {
+      if (keepAliveRef.current) clearInterval(keepAliveRef.current);
+      speechSynthesis.cancel();
+    };
   }, []);
 
-  const speak = useCallback((text: string) => {
-    // Cancel any ongoing speech
-    speechSynthesis.cancel();
-
-    const cleanedText = cleanTextForSpeech(text);
-    const utterance = new SpeechSynthesisUtterance(cleanedText);
-
-    // Configure utterance
-    utterance.rate = 1; // Normal speed
-    utterance.pitch = 1;
-    utterance.volume = 1;
-
-    // Try to use a nice English voice, preferably female voice
-    const voices = speechSynthesis.getVoices();
-    const preferredVoice =
-      voices.find(
-        (voice) =>
-          voice.lang.startsWith("en") &&
-          voice.name.toLowerCase().includes("female"),
-      ) ||
-      voices.find((voice) => voice.lang.startsWith("en")) ||
-      voices[0];
-
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
+  const stopKeepAlive = useCallback(() => {
+    if (keepAliveRef.current) {
+      clearInterval(keepAliveRef.current);
+      keepAliveRef.current = null;
     }
-
-    utterance.onstart = () => {
-      setState("playing");
-    };
-
-    utterance.onpause = () => {
-      setState("paused");
-    };
-
-    utterance.onresume = () => {
-      setState("playing");
-    };
-
-    utterance.onend = () => {
-      setState("finished");
-    };
-
-    utterance.onerror = () => {
-      setState("idle");
-    };
-
-    utteranceRef.current = utterance;
-    speechSynthesis.speak(utterance);
   }, []);
+
+  const speak = useCallback(
+    (text: string) => {
+      speechSynthesis.cancel();
+      stopKeepAlive();
+
+      const cleanedText = cleanTextForSpeech(text);
+
+      const doSpeak = (voice: SpeechSynthesisVoice | null) => {
+        const utterance = new SpeechSynthesisUtterance(cleanedText);
+        utterance.rate = 1;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        if (voice) utterance.voice = voice;
+
+        utterance.onstart = () => setState("playing");
+        utterance.onpause = () => setState("paused");
+        utterance.onresume = () => setState("playing");
+        utterance.onend = () => {
+          stopKeepAlive();
+          setState("finished");
+        };
+        utterance.onerror = () => {
+          stopKeepAlive();
+          setState("idle");
+        };
+
+        utteranceRef.current = utterance;
+        speechSynthesis.speak(utterance);
+
+        // Chrome stops speaking silently after ~15s — nudge it every 14s
+        keepAliveRef.current = setInterval(() => {
+          if (speechSynthesis.speaking && !speechSynthesis.paused) {
+            speechSynthesis.pause();
+            speechSynthesis.resume();
+          }
+        }, 14000);
+      };
+
+      const voice = getPreferredVoice();
+      if (voice) {
+        doSpeak(voice);
+      } else {
+        // Voices not loaded yet — wait for them
+        const onVoicesChanged = () => {
+          speechSynthesis.removeEventListener("voiceschanged", onVoicesChanged);
+          doSpeak(getPreferredVoice());
+        };
+        speechSynthesis.addEventListener("voiceschanged", onVoicesChanged);
+      }
+    },
+    [stopKeepAlive],
+  );
 
   const pause = useCallback(() => {
     if (speechSynthesis.speaking && !speechSynthesis.paused) {
@@ -79,9 +101,10 @@ export function useSpeechSynthesis() {
   }, []);
 
   const cancel = useCallback(() => {
+    stopKeepAlive();
     speechSynthesis.cancel();
     setState("idle");
-  }, []);
+  }, [stopKeepAlive]);
 
   const togglePlayPause = useCallback(() => {
     if (state === "playing") {
