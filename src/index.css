@@ -17,11 +17,13 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   @apply bg-white text-gray-900 antialiased;
   margin: 0;
+  overflow-x: hidden;
 }
 
 /* ============================================================
